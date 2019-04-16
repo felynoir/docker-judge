@@ -18,5 +18,3 @@ fs.readFile("./" + file, function read(err, data) {
   console.log("diff st - create " + (start - create) / 1000 + "s");
   console.log("diff fi - st " + (finish - start) / 1000 + "s");
 });
-
-console.log("%");

@@ -1,14 +1,12 @@
 #!/bin/bash
 
-# : [time]
+# : [name] [time]
 
-# tt = $1
-# shift
+NAME=$1
+shift
 
-echo "Before timeout"
-
-docker stop -t 15 $(e) 
-
-echo "After timeout"
+echo "Starting docker."
+docker run --rm --name NAME -it -v $(pwd):/app cpprun app/Processing.sh $@
+echo "Ending docker process."
 
 exit
