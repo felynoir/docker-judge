@@ -3,27 +3,27 @@
 using namespace std;
 
 // A function that terminates when enter key is pressed
-long long int mem[100][10][10];
+long long int mem[1000][1000][10];
 void fun()
 {
     printf("fun() starts \n");
     int N = 10000;
     const long long int MAX = 600000000;
     long long int a = 0;
-    for (int i = 0; i < 100; i++)
-    {
-        for (int j = 0; j < 10; j++)
-        {
-            for (int k = 0; k < 10; k++)
-            {
-                mem[i][j][k] = a++;
-            }
-        }
-    }
-    // for (long long int i = 0; i < MAX; i++)
+    // for (int i = 0; i < 1000; i++)
     // {
-    //     mem[i % 10000] = a++;
+    //     for (int j = 0; j < 1000; j++)
+    //     {
+    //         for (int k = 0; k < 10; k++)
+    //         {
+    //             mem[i][j][k] = a++;
+    //         }
+    //     }
     // }
+    for (long long int i = 0; i < MAX; i++)
+    {
+        a++;
+    }
     printf("%lld", a);
 }
 
