@@ -1,42 +1,76 @@
-/* Program to demonstrate time taken by function fun() */
-#include <bits/stdc++.h>
+#include<bits/stdc++.h>
 using namespace std;
 
-// A function that terminates when enter key is pressed
-long long int mem[1000][1000][10];
-void fun()
+struct p
 {
-    printf("fun() starts \n");
-    int N = 10000;
-    const long long int MAX = 600000000;
-    long long int a = 0;
-    // for (int i = 0; i < 1000; i++)
-    // {
-    //     for (int j = 0; j < 1000; j++)
-    //     {
-    //         for (int k = 0; k < 10; k++)
-    //         {
-    //             mem[i][j][k] = a++;
-    //         }
-    //     }
-    // }
-    for (long long int i = 0; i < MAX; i++)
-    {
-        a++;
-    }
-    printf("%lld", a);
+	int m,a,b;
+	bool operator < (const p &t) const
+	{
+		return t.m<m;
+	}
+}tmp;
+
+int z[1001][1001],n,x[]={0,0,1,-1},y[]={1,-1,0,0},ans;
+bool ch[1001][1001];
+priority_queue<p> q;
+
+void find(p P)
+{
+	int a=P.a,b=P.b,xx,yy;
+	ch[a][b]=1;
+	for(int i=0;i<4;i++)
+	{
+		xx=a+x[i],yy=b+y[i];
+		if(xx>-1&&yy>-1&&xx<n&&yy<n)
+		{
+			if(!ch[xx][yy])
+			{
+				if(z[xx][yy]==0)
+				{
+					ans=z[a][b];
+					return;
+				}
+					
+				else 
+				{
+					if(z[xx][yy]<z[a][b])
+						z[xx][yy]=z[a][b];
+					tmp.a=xx,tmp.b=yy,tmp.m=z[xx][yy];
+					
+					q.push(tmp);
+				}
+			}
+		}
+	}
 }
 
-// The main program calls fun() and measures time taken by fun()
 int main()
 {
-    // Calculate the time taken by fun()
-    clock_t t;
-    t = clock();
-    fun();
-    t = clock() - t;
-    double time_taken = ((double)t) / CLOCKS_PER_SEC; // in seconds
-
-    printf("fun() took %f seconds to execute \n", time_taken);
-    return 0;
+	int X,Y;
+	scanf("%d",&n);
+	for(int i=0;i<n;i++)
+	{
+		for(int j=0;j<n;j++)
+		{
+			scanf("%d",&z[i][j]);
+			if(z[i][j]==0&&q.empty())
+				tmp.a=i,tmp.b=j,tmp.m=0,q.push(tmp);
+		}
+	}
+	
+	while(!q.empty())
+	{
+		tmp=q.top();
+		q.pop();
+		if(!ch[tmp.a][tmp.b])
+		{
+			find(tmp);
+			if(ans>0)
+			{
+				printf("%d",ans);
+				return 0;
+			}
+		}
+	}
+	
 }
