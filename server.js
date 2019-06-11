@@ -22,7 +22,9 @@ app.get("/test", (req, res) => {
   });
 });
 
-app.get("/", (req, res) => {
+app.get("/", (req, res) => res.status(200).json("hello world"));
+
+app.get("/hello", (req, res) => {
   const data = {
     _id: "5cfe4c6390d61e1eb9898a61",
     url:
