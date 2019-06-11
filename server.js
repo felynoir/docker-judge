@@ -3,6 +3,7 @@ const cors = require("cors");
 const bodyparser = require("body-parser");
 const fs = require("fs");
 const https = require("https");
+const exec = require("child_process").exec;
 
 const app = express();
 const port = 3000;
@@ -13,6 +14,13 @@ const port = 3000;
 app.use(bodyparser.json());
 app.use(bodyparser.urlencoded({ extended: false }));
 app.use(cors());
+
+app.get("/test", (req, res) => {
+  exec("docker ps", (err, stdout, stderr) => {
+    console.log(err, stdout, stderr);
+    res.status(200).json("ee");
+  });
+});
 
 app.get("/", (req, res) => {
   const data = {
