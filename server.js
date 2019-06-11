@@ -6,7 +6,7 @@ const https = require("https");
 const exec = require("child_process").exec;
 
 const app = express();
-const port = 3000;
+const port = process.env.PORT || 3000;
 
 // parse application/x-www-form-urlencoded
 
