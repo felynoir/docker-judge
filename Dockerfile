@@ -6,8 +6,6 @@ COPY package*.json ./
 
 RUN npm install
 
-RUN sudo service docker start
-
 COPY . .
 
-CMD [ "npm", "start" ]
+CMD ["npm","start"]

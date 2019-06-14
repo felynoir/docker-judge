@@ -15,8 +15,33 @@ app.use(bodyparser.json());
 app.use(bodyparser.urlencoded({ extended: false }));
 app.use(cors());
 
+const { spawn } = require("child_process");
+
 app.get("/test", (req, res) => {
-  exec("docker ps", (err, stdout, stderr) => {
+  const ls = spawn("docker", ["ps", "-a"]);
+
+  ls.stdout.on("data", data => {
+    console.log(`stdout: ${data}`);
+  });
+
+  ls.stderr.on("data", data => {
+    console.log(`stderr: ${data}`);
+  });
+
+  ls.on("close", code => {
+    res.status(200).json(`child process exited with code ${code}`);
+  });
+});
+
+app.get("/test2", (req, res) => {
+  exec("g++", (err, stdout, stderr) => {
+    console.log(err, stdout, stderr);
+    res.status(200).json("ee");
+  });
+});
+
+app.get("/test3", (req, res) => {
+  exec("gcc", (err, stdout, stderr) => {
     console.log(err, stdout, stderr);
     res.status(200).json("ee");
   });
