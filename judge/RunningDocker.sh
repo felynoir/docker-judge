@@ -23,7 +23,7 @@ TIME=$1
 shift
 # time limit for esecution
 
-FILEEXE="${TEMPPATH}/exe" 
+FILEEXE="${TEMPPATH}/run.exe" 
 # path for execution file
 OUTPUT="${TEMPPATH}/output" 
 # path for output file after execution
@@ -36,7 +36,7 @@ MAPPARAMS="$FILEEXE $OUTPUT $FINISH $COMPILEERROR"
 
 echo "Starting docker."
 #compile
-docker run --name $NAMEDOCKER -it -m 256m -v $(pwd):/${TEMPPATH} ${DOCKERIMAGE} ${TEMPPATH}/${NAMECOMPILE}.sh $MAPPARAMS
+docker run --name $NAMEDOCKER -m 256m -v $(pwd)/judge:/${TEMPPATH} ${DOCKERIMAGE} ${TEMPPATH}/${NAMECOMPILE}.sh $MAPPARAMS
 dockercompile=$?
 docker kill $NAMEDOCKER > /dev/null 2>&1
 docker rm $NAMEDOCKER > /dev/null 2>&1
@@ -47,7 +47,7 @@ then
     exit $dockercompile 
 fi
 # run
-docker run --name $NAMEDOCKER -it -m $MEM --memory-swap="${MEM}" -v $(pwd):/${TEMPPATH} ${DOCKERIMAGE} ${TEMPPATH}/${NAMEEXE}.sh $TIME $MAPPARAMS
+docker run --name $NAMEDOCKER -m $MEM --memory-swap="${MEM}" -v $(pwd)/judge:/${TEMPPATH} ${DOCKERIMAGE} ${TEMPPATH}/${NAMEEXE}.sh $TIME $MAPPARAMS
 dockerrun=$?
 docker kill $NAMEDOCKER > /dev/null 2>&1
 docker rm $NAMEDOCKER > /dev/null 2>&1

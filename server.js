@@ -26,7 +26,7 @@ app.get("/", (req, res) => res.status(200).json("hello world"));
 
 app.get("/hello", (req, res) => {
   const data = require("./mockup");
-  const file = fs.createWriteStream(`judge/main.cpp`);
+  //const file = fs.createWriteStream(`judge/main.cpp`);
   https.get(data.url, response => {
     const { statusCode } = response;
 
@@ -39,8 +39,24 @@ app.get("/hello", (req, res) => {
       response.resume();
       return;
     }
-
-    response.pipe(file).on("close", () => {});
+    const dockerImage = "judge";
+    const memory = "256m";
+    const time = "1s";
+    // response.pipe(file).on("close", () => {
+    exec(
+      `judge/RunningDocker.sh ${dockerImage} judgement app Compiling Executing ${memory} ${time}`,
+      (err, stdout, stderr) => {
+        console.log("===========1===========");
+        console.log(err);
+        console.log("===========2===========");
+        console.log(stdout);
+        console.log("===========3===========");
+        console.log(stderr);
+        console.log("======================");
+        res.status(200).json("endd");
+      }
+    );
+    // });
   });
 });
 

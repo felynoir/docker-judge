@@ -2,4 +2,10 @@
 
 node_modules
 
-main.cpp
+judge/error
+judge/finish
+judge/main.cpp
+judge/output
+judge/run.exe
+
+*.cpp
